@@ -1,0 +1,16 @@
+version: '3.5'
+services:
+  webserver-php54:
+    image: php:5.4-apache
+    container_name: webserver-php54
+    working_dir: /var/www/html
+    ports:
+      - 8099:80
+    volumes:
+      - .:/var/www/html
+      - ./docker/php/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+      - ./docker/apache/apache.conf:/etc/apache2/sites-enabled/000-default.conf
+    entrypoint: [ "/bin/sh" , "/var/www/html/docker/entrypoint.sh" ]
+    command: apache2-foreground
+    tty: true
+    restart: on-failure
